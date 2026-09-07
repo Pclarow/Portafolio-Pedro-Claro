@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio Pedro Claro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0c;
+    --window:#151517;
+    --window-bar:#1d1d20;
+    --line:#2b2b2f;
+    --gold:#f2b134;
+    --text:#f2f0eb;
+    --text-dim:#9a9a96;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', system-ui, sans-serif;
+  }
+
+  body{
+    background-image: radial-gradient(circle at 20% 0%, rgba(242,177,52,0.05), transparent 45%);
+  }
+
+  h1,h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    margin:0;
+  }
+
+  .wrap{
+    max-width:960px;
+    margin:0 auto;
+    padding:72px 24px 80px;
+  }
+
+  header{
+    margin-bottom:56px;
+    max-width:58ch;
+  }
+
+  header p.tag{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:500;
+    color:var(--gold);
+    font-size:13px;
+    margin:0 0 14px;
+    letter-spacing:0.02em;
+  }
+
+  header h1{
+    font-size:clamp(32px,5vw,48px);
+    line-height:1.1;
+    margin-bottom:16px;
+  }
+
+  header p.lede{
+    color:var(--text-dim);
+    font-size:16px;
+    line-height:1.65;
+    margin:0;
+  }
+
+  .windows{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px;
+  }
+
+  @media (max-width: 720px){
+    .windows{ grid-template-columns:1fr; }
+  }
+
+  details.window{
+    background:linear-gradient(180deg, #17171a 0%, #131315 100%);
+    border:1px solid var(--line);
+    border-radius:13px;
+    overflow:hidden;
+    box-shadow:0 14px 34px -22px rgba(0,0,0,0.75);
+    transition:box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+    position:relative;
+  }
+
+  details.window::before{
+    content:"";
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:var(--accent, var(--gold));
+    opacity:0.9;
+  }
+
+  details.window:hover{
+    transform:translateY(-3px);
+    box-shadow:0 22px 44px -20px rgba(0,0,0,0.85);
+    border-color:rgba(255,255,255,0.14);
+  }
+
+  details.window[open]{
+    border-color:color-mix(in srgb, var(--accent, var(--gold)) 45%, var(--line));
+  }
+
+  summary.titlebar{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 16px 13px;
+    background:var(--window-bar);
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+    user-select:none;
+  }
+
+  summary.titlebar::-webkit-details-marker{ display:none; }
+
+  .dots{ display:flex; gap:6px; flex-shrink:0; }
+  .dots span{ width:8px; height:8px; border-radius:50%; display:block; background:var(--accent, var(--gold)); opacity:0.85; }
+
+  .titlebar .filename{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-left:4px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .titlebar .proj-num{
+    margin-left:auto;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--accent, var(--gold));
+    border:1px solid color-mix(in srgb, var(--accent, var(--gold)) 45%, transparent);
+    border-radius:5px;
+    padding:2px 7px;
+    flex-shrink:0;
+  }
+
+  .window-body{
+    padding:24px 22px 26px;
+  }
+
+  .icon-badge{
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    background:color-mix(in srgb, var(--accent, var(--gold)) 16%, transparent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+
+  .icon-badge svg{
+    width:24px;
+    height:24px;
+    stroke:var(--accent, var(--gold));
+    color:var(--accent, var(--gold));
+  }
+
+  .tech-tags{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+
+  .tech-tags span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    color:var(--text-dim);
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 8px;
+  }
+
+  .window-body h2{
+    font-size:18.5px;
+    margin-bottom:11px;
+    letter-spacing:-0.01em;
+  }
+
+  .window-body p{
+    color:var(--text-dim);
+    font-size:14.5px;
+    line-height:1.65;
+    margin:0 0 20px;
+  }
+
+  a.visit{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:14px;
+    color:#0b0b0c;
+    background:var(--accent, var(--gold));
+    padding:10px 18px;
+    border-radius:7px;
+    text-decoration:none;
+    transition:filter .15s ease, transform .15s ease;
+  }
+
+  a.visit:hover{ filter:brightness(1.1); transform:translateX(2px); }
+
+  .hint{
+    text-align:center;
+    color:var(--text-dim);
+    font-size:13px;
+    margin:26px 0 0;
+  }
+
+  footer{
+    margin-top:64px;
+    color:var(--text-dim);
+    font-size:13px;
+    line-height:1.6;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+  }
+
+  footer a{ color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(242,177,52,.4); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <p class="tag">// taller de interfaces — universidad adolfo ibáñez</p>
+    <h1>Portafolio Pedro Claro</h1>
+    <p class="lede">
+      Cuatro proyectos, cuatro ventanas. Haz clic en cada una para abrirla y ver de qué trata.
+    </p>
+  </header>
+
+  <div class="windows">
+
+    <details class="window" style="--accent:#4a90d9">
+      <summary class="titlebar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        <span class="filename">Interfaz — Electrodomésticos</span>
+      </summary>
+      <div class="window-body">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="16" height="18" rx="3"/>
+            <path d="M8 8h8"/>
+            <circle cx="8" cy="12.5" r="0.6" fill="currentColor"/>
+            <circle cx="12" cy="12.5" r="0.6" fill="currentColor"/>
+            <path d="M7 16.5h10"/>
+          </svg>
+        </div>
+        <div class="tech-tags"><span>Lámina gráfica</span><span>Análisis de interfaz</span></div>
+        <h2>Análisis de Interfaz — Freidora de Aire Oster</h2>
+        <p>
+          Lámina gráfica que identifica y clasifica las entradas y salidas de un electrodoméstico
+          cotidiano: botones táctiles, asa de la cesta, ventana de visualización, señal sonora y
+          más, cada una tipificada como física, visual o acústica.
+        </p>
+        <a class="visit" href="https://pclarow.github.io/Interfaz-1-Electrodomesticos/" target="_blank" rel="noopener">Visitar proyecto</a>
+      </div>
+    </details>
+
+    <details class="window" style="--accent:#4fb85e">
+      <summary class="titlebar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        <span class="filename">Experiencia Interactiva</span>
+      </summary>
+      <div class="window-body">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 4 L4 12 L4 18 A2 2 0 0 0 6 20 L18 20 A2 2 0 0 0 20 18 L20 12 L16 4 Z"/>
+            <circle cx="9" cy="14" r="1.6"/>
+            <path d="M14.5 12.5 L17.5 12.5 M16 11 L16 14"/>
+          </svg>
+        </div>
+        <div class="tech-tags"><span>HTML · CSS · JS</span><span>Audio interactivo</span></div>
+        <h2>Experiencia Educativa Interactiva</h2>
+        <p>
+          Aplicación web donde el sonido es el eje central de una mecánica lúdica: material de
+          audio editado y procesado, integrado en una experiencia interactiva pensada para jugarse
+          en el navegador.
+        </p>
+        <a class="visit" href="https://pclarow.github.io/juego-11-08/" target="_blank" rel="noopener">Visitar proyecto</a>
+      </div>
+    </details>
+
+    <details class="window" style="--accent:#f2a65a">
+      <summary class="titlebar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        <span class="filename">Sintetizador Final</span>
+      </summary>
+      <div class="window-body">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 20 V10 M12 20 V4 M18 20 V13"/>
+            <circle cx="6" cy="14" r="1.8" fill="currentColor" stroke="none"/>
+            <circle cx="12" cy="8" r="1.8" fill="currentColor" stroke="none"/>
+            <circle cx="18" cy="17" r="1.8" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <div class="tech-tags"><span>Max/MSP</span><span>Síntesis en tiempo real</span></div>
+        <h2>Síntesis y Control Sonoro en Max/MSP</h2>
+        <p>
+          Sintetizador construido en Max/MSP con interfaz gráfica en Presentation Mode: disparo,
+          sostenido y control de volumen en tiempo real, documentado en video.
+        </p>
+        <a class="visit" href="https://pclarow.github.io/Sintetizador-Final/" target="_blank" rel="noopener">Visitar proyecto</a>
+      </div>
+    </details>
+
+    <details class="window" style="--accent:#6fd6c4">
+      <summary class="titlebar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        <span class="filename">Sonificación de Imágenes</span>
+      </summary>
+      <div class="window-body">
+        <div class="icon-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="12" height="12" rx="2"/>
+            <circle cx="7" cy="8" r="1.3"/>
+            <path d="M4 14 L8.5 10.5 L11 12.5 L15 9"/>
+            <path d="M18 8 v8 M20.5 9.5 v5 M15.5 10.5 v3"/>
+          </svg>
+        </div>
+        <div class="tech-tags"><span>Web Audio API</span><span>Sonificación</span></div>
+        <h2>Sonificación de Datos e Imágenes</h2>
+        <p>
+          Dos módulos interactivos: los datos del sistema solar traducidos a notas musicales, y
+          una imagen que se explora escuchándola en tiempo real, con paneo, volumen y timbre
+          controlados por el cursor.
+        </p>
+        <a class="visit" href="https://pclarow.github.io/Sonificac-on-de-imagenes/" target="_blank" rel="noopener">Visitar proyecto</a>
+      </div>
+    </details>
+
+  </div>
+
+  <p class="hint">Cada ventana es independiente — puedes tener varias abiertas a la vez.</p>
+
+  <footer>
+    Portafolio del Taller de Interfaces — Universidad Adolfo Ibáñez, 2026 — Jorge Forero.
+    Perfil de GitHub:
+    <a href="https://github.com/pclarow" target="_blank" rel="noopener">github.com/pclarow</a>.
+  </footer>
+
+</div>
+</body>
+</html>
